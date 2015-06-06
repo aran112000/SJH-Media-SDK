@@ -36,14 +36,23 @@ final class sjh_media {
 				'last_name',
 				'email',
 				'phone',
+				'mobile_phone',
 				'address_1',
 				'address_2',
 				'town',
 				'county',
 				'postcode',
 				'country',
-				// TODO; Expand upon required fields from DB
-				// TODO; Check required parameters are present within $this->doVerifyRequest()
+
+				'payment_method',
+				'ip_address',
+				// Non-required fields:
+				//'bank_sort_code',
+				//'bank_account_number',
+				//'bank_account_number',
+				//'vendor_id',
+				//'paypal_email',
+				//'trade_in_packs_status',
 			],
 		]
 	];
@@ -106,11 +115,23 @@ final class sjh_media {
 	}
 
 	/**
-	 * @param string $key
-	 * @param string $value
+	 * @return bool
 	 */
-	public function doAddRequestParameter($key, $value) {
-		$this->api_params[$key] = urldecode($value);
+	public function setRequestParameter( /* Polymorphic - Can be $key, $value OR array('key1' => 'val1'...) */ ) {
+		$arguments = func_get_args();
+		if (count($arguments) == 2) {
+			// Handle $key, $value arguments
+			$this->api_params[$arguments[0]] = urldecode($arguments[1]);
+		} else if (is_array($arguments[0])) {
+			// Handle arrays arguments
+			foreach ($arguments[0] as $key => $value) {
+				$this->api_params[$key] = urldecode($value);
+			}
+		} else {
+			throw new InvalidArgumentException('$this->setRequestParameter() is Polymorphic - Parameters can be formatted as ($key, $value) OR (array("key1" => "val1", ...))');
+		}
+
+		return true;
 	}
 
 	/**
@@ -165,9 +186,21 @@ final class sjh_media {
 		if ($this->api_endpoint === null || $this->api_endpoint_details === null) {
 			$errors[] = 'Please make sure to call $this->setApiEndpoint("/change_to_your_required_feature") before calling $this->doApiRequest()';
 		}
+		if (!empty($this->api_endpoint_details['required_parameters'])) {
+			$missing_parameters = [];
+			foreach ($this->api_endpoint_details['required_parameters'] as $required_param) {
+				if (!isset($this->api_params[$required_param])) {
+					$missing_parameters[] = $required_param;
+				}
+			}
+
+			if (!empty($missing_parameters)) {
+				$errors[] = 'The following required parameters are missing from your API request: ' . implode(', ', $missing_parameters);
+			}
+		}
 
 		if (!empty($errors)) {
-			throw new Exception('API request failed to pass checks with the following errors: ' . implode(',', $errors));
+			throw new Exception('API request failed to pass checks with the following errors: ' . implode(', ', $errors));
 		}
 
 		return true;
