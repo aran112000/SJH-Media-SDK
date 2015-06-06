@@ -9,7 +9,7 @@ final class sjh_media {
 	const SECRET_KEY = 'YOUR_SECRET_KEY_HERE';
 	// TODO; End of settings to be changed - Don't edit beneath here
 
-	const API_VERSION = 1.0;
+	const API_VERSION = '1.0';
 	const API_HOSTNAME = 'https://www.sjhmedia.net';
 
 	private $api_params = [
@@ -87,9 +87,10 @@ final class sjh_media {
 			$curl_options = [
 				CURLOPT_URL => $this->getEndpointUrl(),
 				CURLOPT_RETURNTRANSFER => 1,
+				CURLOPT_SSL_VERIFYPEER => false,
 				CURLOPT_USERAGENT => 'SJH Media SDK v' . self::API_VERSION,
 				CURLOPT_HTTPHEADER => [
-					'x-sjh-media-signature' => $this->getRequsetSignature()
+					'x-sjh-media-signature: ' . $this->getRequsetSignature()
 				]
 			];
 
@@ -105,6 +106,10 @@ final class sjh_media {
 			$curl = curl_init();
 			curl_setopt_array($curl, $curl_options);
 			$api_response = curl_exec($curl);
+			if ($api_response === false) {
+				$response_headers = curl_getinfo($curl);
+				echo '<p><pre>' . print_r($response_headers, true) . '</pre></p>'."\n";
+			}
 			curl_close($curl);
 
 			return $api_response;
@@ -157,7 +162,7 @@ final class sjh_media {
 	 * @return string
 	 */
 	private function getEndpointUrl() {
-		return self::API_HOSTNAME . '/' . self::API_VERSION . '/' . $this->api_endpoint;
+		return self::API_HOSTNAME . '/api/' . self::API_VERSION . '/' . $this->api_endpoint;
 	}
 
 	/**
