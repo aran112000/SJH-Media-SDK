@@ -29,7 +29,7 @@ final class sjh_media {
 				'id',
 			],
 		],
-		'order' => [
+		'recycle' => [
 			'method' => 'GET',
 			'required_parameters' => [
 				'first_name',
@@ -43,16 +43,8 @@ final class sjh_media {
 				'county',
 				'postcode',
 				'country',
-
 				'payment_method',
 				'ip_address',
-				// Non-required fields:
-				//'bank_sort_code',
-				//'bank_account_number',
-				//'bank_account_number',
-				//'vendor_id',
-				//'paypal_email',
-				//'trade_in_packs_status',
 			],
 		]
 	];
