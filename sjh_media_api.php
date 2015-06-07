@@ -30,21 +30,21 @@ final class sjh_media {
 			],
 		],
 		'recycle' => [
-			'method' => 'GET',
+			'method' => 'POST',
 			'required_parameters' => [
+				'gadgets',
 				'first_name',
 				'last_name',
-				'email',
-				'phone',
-				'mobile_phone',
-				'address_1',
-				'address_2',
-				'town',
+				'email_address',
+				'phone_number',
+				'address1',
+				'city',
 				'county',
 				'postcode',
 				'country',
-				'payment_method',
 				'ip_address',
+				'payment_method',
+				'trade_in_packs_required',
 			],
 		]
 	];
@@ -90,7 +90,7 @@ final class sjh_media {
 
 			if ($request_method === 'POST') {
 				$curl_options[CURLOPT_POST] = true;
-				$curl_options[CURLOPT_POSTFIELDS] = $request_parameters;
+				$curl_options[CURLOPT_POSTFIELDS] = http_build_query($request_parameters);
 			} else if ($request_method === 'GET') {
 				$curl_options[CURLOPT_URL] .= '?' . http_build_query($request_parameters);
 			}
@@ -118,11 +118,11 @@ final class sjh_media {
 		$arguments = func_get_args();
 		if (count($arguments) == 2) {
 			// Handle $key, $value arguments
-			$this->api_params[$arguments[0]] = urldecode($arguments[1]);
+			$this->api_params[$arguments[0]] = $arguments[1];
 		} else if (is_array($arguments[0])) {
 			// Handle arrays arguments
 			foreach ($arguments[0] as $key => $value) {
-				$this->api_params[$key] = urldecode($value);
+				$this->api_params[$key] = $value;
 			}
 		} else {
 			throw new InvalidArgumentException('$this->setRequestParameter() is Polymorphic - Parameters can be formatted as ($key, $value) OR (array("key1" => "val1", ...))');
