@@ -38,7 +38,7 @@ final class sjh_media {
 				'email_address',
 				'phone_number',
 				'address1',
-				'city',
+				'town',
 				'county',
 				'postcode',
 				'country',
