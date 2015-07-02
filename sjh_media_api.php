@@ -29,6 +29,13 @@ final class sjh_media {
 				'id',
 			],
 		],
+		'update' => [
+			'method' => 'POST',
+			'required_parameters' => [
+				'id',
+				'action',
+			],
+		],
 		'recycle' => [
 			'method' => 'POST',
 			'required_parameters' => [
