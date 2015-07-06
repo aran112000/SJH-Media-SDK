@@ -163,7 +163,18 @@ final class sjh_media {
 			throw new InvalidArgumentException('$this->setRequestParameter() is Polymorphic - Parameters can be formatted as ($key, $value) OR (array("key1" => "val1", ...))');
 		}
 
+		if (!isset($this->api_params['nonce'])) {
+			$this->api_params['nonce'] = $this->getNonceValue();
+		}
+
 		return true;
+	}
+
+	/**
+	 * @return int
+	 */
+	private function getNonceValue() {
+		return time(); // By default this will suffice
 	}
 
 	/**
