@@ -89,7 +89,8 @@ final class sjh_media {
 				CURLOPT_SSL_VERIFYPEER => false,
 				CURLOPT_USERAGENT => 'SJH Media SDK v' . self::API_VERSION,
 				CURLOPT_HTTPHEADER => [
-					'x-sjh-media-signature: ' . $this->getRequsetSignature()
+					'x-sjh-media-signature: ' . $this->getRequsetSignature(),
+					'x-sjh-media-referrer: ' . $this->getReferrer()
 				]
 			];
 
@@ -116,6 +117,33 @@ final class sjh_media {
 		} catch(Exception $e) {
 			throw new Exception($e);
 		}
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function isHttps() {
+		if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+			return true;
+		}
+
+		if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+			// Fix for proxies / load balancers which oftern strip the HTTPS headers before routing
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return null|string
+	 */
+	private function getReferrer() {
+		if (isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST']) && isset($_SERVER['REQUEST_URI'])) {
+			return 'http' . ($this->isHttps() ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		}
+
+		return null;
 	}
 
 	/**
