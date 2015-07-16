@@ -51,7 +51,7 @@ final class sjh_media {
 				'country',
 				'ip_address',
 				'payment_method',
-				'trade_in_packs_required',
+				'number_of_labels',
 			],
 		]
 	];
