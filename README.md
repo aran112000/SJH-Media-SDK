@@ -15,9 +15,9 @@ $sjh_media = new sjh_media();
 $sjh_media->setApiEndpoint('/feed');
 
 // For single request parameters they can be added using $key, $value parameters passed to setRequestParameter():
-$sjh_media->setRequestParameter('format', 'json');
+$sjh_media->setRequestParameter('id', '123');
 // Where more than one parameter is required, you can also pass these all through in one hit using an array as follows:
-$sjh_media->setRequestParameter(['format' => 'json', 'type' => 'console']);
+$sjh_media->setRequestParameter(['id' => '132', 'type' => 'console']);
 
 // Once you've built your full API request, it can be executed as follows:
 $api_response = $sjh_media->doApiRequest();
