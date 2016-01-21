@@ -10,7 +10,7 @@ final class sjh_media {
     const SECRET_KEY = 'YOUR_SECRET_KEY_HERE';
     // TODO; End of settings to be changed - Don't edit beneath here
 
-    const API_VERSION = '2.00';
+    const API_VERSION = '2.10';
     const API_HOSTNAME = 'https://www.sjhmedia.net';
 
     private $api_params = [
