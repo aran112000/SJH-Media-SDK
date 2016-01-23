@@ -5,17 +5,12 @@
  */
 final class sjh_media {
 
-    // TODO; Add your own API credentials here
-    const API_KEY = 'YOUR_API_KEY_HERE';
-    const SECRET_KEY = 'YOUR_SECRET_KEY_HERE';
-    // TODO; End of settings to be changed - Don't edit beneath here
-
     const API_VERSION = '2.10';
     const API_HOSTNAME = 'https://www.sjhmedia.net';
 
-    private $api_params = [
-        'api_key' => self::API_KEY
-    ];
+    private $api_params = [];
+    private $api_key = null;
+    private $api_secret = null;
     private $api_endpoint = null;
     private $api_endpoint_details = null;
 
@@ -56,6 +51,17 @@ final class sjh_media {
             ],
         ]
     ];
+    
+    /**
+     * @param string $api_key
+     * @param string $api_secret
+     */
+    public function __construct($api_key, $api_secret) {
+        $this->api_key = $api_key;
+        $this->api_secret = $api_secret;
+        
+        $this->api_params['api_key'] = $this->api_key;
+    }
 
     /**
      * @param string $api_endpoint
