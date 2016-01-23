@@ -2,9 +2,7 @@
 This is the official PHP SDK for SJH Media enabling recyclers to integrate our platform into their existing setup.
 
 ##How to use this API
-In sjh_media_api.php you will need to update 2 lines of code at the top of the file as indicated to include both your API Key and Secret Key as will have been provided by the onboarding team at SJH Media.
-
-Once in place you're ready to start making your first API requests via the SDK as follows:
+Your API Key and API Secret will need to be passed through into the sjh_media construct as per the example below, as soon as you've done so, you're ready to start making your first API requests via the SDK as follows:
 
 ##Making your first API Request
 ```php
