@@ -9,7 +9,7 @@ Once in place you're ready to start making your first API requests via the SDK a
 ##Making your first API Request
 ```php
 <?php
-$sjh_media = new sjh_media();
+$sjh_media = new sjh_media($api_key, $api_secret);
 
 // Specify the function call you're trying to make
 $sjh_media->setApiEndpoint('/feed');
