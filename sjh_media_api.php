@@ -83,7 +83,7 @@ final class sjh_media {
     }
 
     /**
-     * @return string
+     * @return array|string
      * @throws \Exception
      */
     public function doApiRequest() {
@@ -114,11 +114,15 @@ final class sjh_media {
             $curl = curl_init();
             curl_setopt_array($curl, $curl_options);
             $api_response = curl_exec($curl);
-            if ($api_response === false) {
-                $response_headers = curl_getinfo($curl);
-                echo '<p><pre>' . print_r($response_headers, true) . '</pre></p>' . "\n";
-            }
+            $response_headers = curl_getinfo($curl);
             curl_close($curl);
+            
+            if ($api_response === false) {
+                throw new Exception('API request failed, response headers: ' . print_r($response_headers, true))
+            }
+            if ($json_response = json_decode($api_response, true)) {
+                 $api_response = $json_response;
+            }
 
             return $api_response;
         } catch (Exception $e) {
