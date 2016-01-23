@@ -10,7 +10,7 @@ Your API Key and API Secret will need to be passed through into the sjh_media co
 $sjh_media = new sjh_media($api_key, $api_secret);
 
 // Specify the function call you're trying to make
-$sjh_media->setApiEndpoint('/feed');
+$sjh_media->setApiEndpoint('feed');
 
 // For single request parameters they can be added using $key, $value parameters passed to setRequestParameter():
 $sjh_media->setRequestParameter('id', '123');
@@ -19,8 +19,6 @@ $sjh_media->setRequestParameter(['id' => '132', 'type' => 'console']);
 
 // Once you've built your full API request, it can be executed as follows:
 $api_response = $sjh_media->doApiRequest();
-
-$array_formatted_response = json_decode($api_response);
 
 // ... Handle the API response as you need from here
 ```
