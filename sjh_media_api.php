@@ -5,7 +5,7 @@
  */
 final class sjh_media {
 
-    const API_VERSION = '2.10';
+    const API_VERSION = '2.11';
     const API_HOSTNAME = 'https://www.sjhmedia.net';
 
     private $api_params = [];
